@@ -1,0 +1,26 @@
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+    <div class="modal-dialog modal-dialog-scrollable" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="" method="post" enctype="multipart/form-data" novalidate></form>
+                    <div class="modal-header">
+                        <h5 class="modal-title">Update Profile</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                            {% csrf_token %}
+                            {{ user_form|crispy }}
+                            {{ prof_form|crispy }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-sm btn-info" value="Save"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
