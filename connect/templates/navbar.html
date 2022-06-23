@@ -4,15 +4,15 @@
     <div class="container-fluid">
       <div class="navbar-header">
         <img src="{%static 'photos/connect.png'%}" width="30" height="30" alt="">
-        <a class="navbar-brand" class="styleheader" href="{% url 'index'%}">iConnect</a>
+        <a class="navbar-brand" class="styleheader" href="{% url 'home'%}">iConnect</a>
       </div>
       <div class="collapse navbar-collapse" id="mainNavBar">
         <ul class="nav navbar-nav">
-          <li><a href="{% url 'index' %}">Home</a></li>
+          <li><a href="{% url 'home' %}">Home</a></li>
 
-          {% if user.is_authenticated %}
+          {% if profile.user == request.user and request.user.is_authenticated %}
           <li><a href="{% url 'login' %}"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i> &nbsp; Logout</a></li>
-          <li><a href="{% url 'profile'%}"><i class="fa fa-user fa-2x" aria-hidden="true"></i>Profile</a></li>
+          <li><a href="{% url 'profile' %}"><i class="fa fa-user fa-2x" aria-hidden="true"></i>Profile</a></li>
           {% else %}
           <li><a href="{% url 'register' %}"><i class="fa fa-user-plus fa-2x" aria-hidden="true"></i>&nbsp; Sign up</a></li>
           <li><a href="{% url 'login' %}"><i class="fa fa-sign-in fa-2x" aria-hidden="true">&nbsp; Log in</a></li>
