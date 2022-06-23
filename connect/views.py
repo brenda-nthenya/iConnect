@@ -43,11 +43,12 @@ def user_profile(request, username):
 
 def profile(request, profile_id):
     try:
-        user = User.objects.get(pk=profile_id)
+        user = User.objects.get(id=profile_id)
         profile=Profile.objects.get(user=user)
 
         context = {
             "profile":profile
+
         }
     except Profile.DoesNotExist:
         raise Http404()
