@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+{{block.super}}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block title %} iConnect {% endblock title %}
+
+{% block content %}
+<div class="container">
+
+    <div>
+        <form action="" method="post" style="max-width: 30rem; margin: auto;">
+            {% csrf_token %}
+            <div class="input-group my-3">
+                <input type="text" name="username" class="form-control shadow-none" placeholder="username" required>
+                <button class="btn btn-warning text-light shadow-none" type="submit" id="search-button">Search</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="row">
+        {% if all_profiles %}
+        {% for profile in all_profiles %}
+        <div class="col-md-6 col-lg-4 my-4">
+            <div class="card bg-dark text-light mx-auto" style="width: 18rem; height: 22rem;">
+                {% if profile.profile_photo %}
+                <img src="{{ profile.profile_photo.url }}" class="card-img-top" alt="..." style="width: auto; height: 10rem;">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">Username: {{ profile.user.username }}</h5>
+                    <p class="card-text">Age: {{ profile.age }}</p>
+                    <p class="card-text">Location: {{ profile.location }}</p>
+                    <a href="{% url 'profile' profile.id %}" class="btn btn-primary">See More</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <h3 class="text-center text-light">No posts at the moment</h3>
+        {% endif %}
+    </div>
+</div>
+</div>
+{% endblock content %}

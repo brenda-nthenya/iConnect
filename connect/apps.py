@@ -2,11 +2,11 @@ from django.apps import AppConfig
 
 
 class ConnectConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'connect'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "connect"
 
     def ready(self):
-        import connect.signals 
+        import connect.signals
 
 
-default_app_config='connect.apps.ConnectConfig'
+default_app_config = "connect.apps.ConnectConfig"

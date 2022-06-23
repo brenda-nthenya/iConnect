@@ -7,6 +7,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.http.response import Http404, HttpResponse
 # Create your views here.
 
+# Create your views here.
 def register(request):
     if request.method=="POST":
         form=UserRegisterForm(request.POST)
@@ -25,11 +26,28 @@ def register(request):
     }
     return render(request, 'django_registration/registration_form.html', params)
 
+def index(request):
+    return render(request, 'index.html')
+
 @login_required(login_url='login')
 def home(request):
     all_profiles = Profile.objects.all()
-    all_profiles = all_profiles[::-1]
-    return render(request, 'user/home.html', locals())
+
+    if request.method == "POST":
+        query = request.POST.get('username')
+        results = Profile.objects.filter(user__username=query)
+
+        context = {
+            'all_profiles': results,
+        }
+
+        return render(request, 'home.html', context)
+    
+    context = {
+            'all_profiles': all_profiles,
+        }
+
+    return render(request, 'home.html', context)
 
 
 def user_profile(request, username):
@@ -39,20 +57,21 @@ def user_profile(request, username):
     params = {
         'user_prof': user_prof,
     }
-    return render(request, 'user/userprofile.html', params)
+    return render(request, 'userprofile.html', params)
 
+@login_required(login_url='login')
 def profile(request, profile_id):
-    try:
-        user = User.objects.get(id=profile_id)
-        profile=Profile.objects.get(user=user)
+    user = get_object_or_404(User, pk=profile_id)
 
-        context = {
-            "profile":profile
+    can_update = False
 
-        }
-    except Profile.DoesNotExist:
-        raise Http404()
-    return render(request, 'user/userprofile.html',context)
+    if request.user == user:
+        can_update = True
+    else:
+        can_update = False
+
+    context = {'user': user, 'can_update': can_update}
+    return render(request, 'userprofile.html', context)
 
 def update_profile(request):
     user = request.user
@@ -71,4 +90,4 @@ def update_profile(request):
         'prof_form': prof_form
     }
 
-    return render(request, 'user/update_profile.html', context )
+    return render(request, 'update_profile.html', context )

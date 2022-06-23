@@ -1,0 +1,120 @@
+{%extends 'base.html'%}
+{% load static %}
+{% load django_bootstrap5 %}
+
+{% block styles %}
+{{block.super}}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock styles %}
+
+{% block title %}Profile{% endblock title %}
+
+{% block content %}
+<section class="container d-flex flex-column justify-content-center align-items-center text-light">
+    <div class="profile d-flex justify-content-around">
+        <div class="dp pe-5">
+            {% if user.profile.profile_photo %}
+            <img src="{{ user.profile.profile_photo.url }}" alt="" style="width: 8rem; height: 8rem; border-radius: 50%;">
+            {% else %}
+            <p style="width: 5rem; height: 5rem; border-radius: 50%; background-color: #74b2c3;"></p>
+            {% endif %}
+        </div>
+
+        <div class="card profile-info" style="background: #2d384bda !important; width: 18rem;">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <p class="fw-bold fs-4">
+                        {{user.username}}
+                    </p>
+                    <p>
+                        {% if can_update  %}
+                        <a href="{% url 'update_profile' %}">
+                            <button type="button" class="btn text-light btn-sm border ms-2 mt-2" id="edit-profile-btn">Edit Profile</button>
+                        </a>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            <div class="card-body">
+                <span class="card-text mt-0 pt-0">
+                    <p>
+                        <span class="fw-bold fs-5">Email</span> <br>
+                        <span class="fw-light">
+                            {{user.profile.user.email}}
+                        </span>
+                    </p>
+                    <p>
+                        <span class="fw-bold fs-5">Age</span> <br>
+                        <span class="fw-light">
+                            {{user.profile.age}}
+                        </span>
+                    </p>
+                    <p>
+                        <span class="fw-bold fs-5">Ethinicity</span> <br>
+                        <span class="fw-light">
+                            {{user.profile.ethnicity}}
+                        </span>
+                    </p>
+                    <p>
+                        <span class="fw-bold fs-5">Gender</span> <br>
+                        <span class="fw-light">
+                            {{user.profile.gender}}
+                        </span>
+                    </p>
+                    <p>
+                        <span class="fw-bold fs-5">Location</span> <br>
+                        <span class="fw-light">
+                            {{user.profile.location}}
+                        </span>
+                    </p>
+                    <p>
+                        <span class="fw-bold fs-5">Location</span> <br>
+                        <span class="fw-light">
+                            {{user.profile.location}}
+                        </span>
+                    </p>
+
+                    {% if user.profile.bio %}
+                    <div class="bio fw-bold">
+                        <span class="fw-bold fs-5">
+                            Bio
+                        </span> <br>
+                        <span class="fw-light">
+                            {{user.profile.bio}}
+                        </span>
+                    </div>
+                    {% endif %}
+
+                    <p>
+                        <span class="fw-bold fs-5">Preference</span> <br>
+                        <span class="fw-light">
+                            {{user.profile.preference}}
+                        </span>
+                    </p>
+                </span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="my-posts mt-5 border-top text-center w-100">
+        <p class="fs-5 fw-bold text-center pt-2">
+            <i class='bx bx-grid'></i>
+            PROFILE
+        </p>
+
+        <div class="posts">
+            {% if user.posts.all %}
+            <ul class="list-group list-group-numbered" style="text-align: left;">
+                {% for post in user.posts.all %}
+                <li class="list-group-item text-light"
+                    style="background-color: transparent; border-color: #FFF !important;">{{ post.title }}</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="mt-4">YOU HAVE 0 MESSAGES</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock content %}
