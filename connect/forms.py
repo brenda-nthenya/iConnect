@@ -17,7 +17,7 @@ class UserRegisterForm(UserCreationForm):
 class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['profile_photo','age','ethnicity', 'preference', 'location', 'gender', 'bio']
+        fields = ['age', 'ethnicity','gender', 'location', 'profile_photo','preference', 'bio']
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
@@ -29,4 +29,4 @@ class UserUpdateForm(forms.ModelForm):
 class UpdateProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['bio','profile_photo', 'preference', 'location']
+        fields = ['age', 'ethnicity','gender', 'location', 'profile_photo','preference', 'bio']

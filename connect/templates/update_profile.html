@@ -1,26 +1,45 @@
-{% load crispy_forms_tags %}
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
 {% load static %}
 
-{% block content %}
-    <div class="modal-dialog modal-dialog-scrollable" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form action="" method="post" enctype="multipart/form-data" novalidate></form>
-                    <div class="modal-header">
-                        <h5 class="modal-title">Update Profile</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                            {% csrf_token %}
-                            {{ user_form|crispy }}
-                            {{ prof_form|crispy }}
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <input type="submit" class="btn btn-sm btn-info" value="Save"/>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+{% block styles %}
+{{block.super}}
+<link rel="stylesheet" href="{% static 'css/update-profile.css' %}">
 {% endblock %}
+
+{% block title %} Update Profile {% endblock title %}
+
+{% block content %}
+
+<section class="container text-light">
+    {% if form.errors %}
+    {% bootstrap_form_errors form layout='inline' %}
+    {% endif %}
+    <div>
+
+        <div>
+            <h3 class="text-center">Update Profile</h3>
+        </div>
+        <div>
+            {% if form.errors %}
+            {% bootstrap_form_errors form layout='inline' %}
+            {% endif %}
+        </div>
+        <div class="mx-auto" style="max-width: 30rem;">
+
+            <form action="{% url 'update_profile' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                {% bootstrap_form user_form %}
+                {% bootstrap_form prof_form %}
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary w-100">update</button>
+                </div>
+        </div>
+        </form>
+
+    </div>
+
+</section>
+{% endblock content %}

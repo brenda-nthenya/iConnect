@@ -6,7 +6,6 @@ class ConnectConfig(AppConfig):
     name = "connect"
 
     def ready(self):
-        # trunk-ignore(flake8/F401)
         import connect.signals
 
 

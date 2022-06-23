@@ -1,63 +1,120 @@
-{% extends 'index.html' %}
-{% load crispy_forms_tags %}
+{%extends 'base.html'%}
+{% load static %}
+{% load django_bootstrap5 %}
+
+{% block styles %}
+{{block.super}}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock styles %}
+
+{% block title %}Profile{% endblock title %}
+
 {% block content %}
-    <div class="container box_1620">
-        <div class="banner_inner d-flex align-items-center">
-            <div class="banner_content">
-                <div class="media">
-                    <div class="d-flex">
-                        <img src="{{profile.profile_photo.url}}">
-                    </div>
-                    <div class="media-body">
-                        <div class="personal_text">
-                            <h6>Le's Connect. I am</h6>
-                            <h3>{{profile.user.first_name}} {{profile.user.last_name}}</h3>
-                            <h4>You can call me {{profile.user.username}}</h4>
-                            <p>{{profile.bio}}</p>
-                            <ul class="list basic_info">
-                                <li><a href="#"><i class="lnr lnr-map-marker"></i>{{profile.location}}</a></li>
-                                <li><a href="#"><i class="lnr lnr-user"></i>{{profile.gender}}</a></li>
-                                <li><a href="#"><i class="lnr lnr-calendar-full"></i> {{profile.age}}</a></li>
-                                {% if profile.user == request.user and request.user.is_authenticated %}
-                                <li><a href="{% url 'update_profile' profile.user.id %}"><i class="lnr lnr-cog"></i>Update Profile</a></li>
-                                {%endif%}
-                            </ul>
-                            <ul class="list personal_social">
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
+<section class="container d-flex flex-column justify-content-center align-items-center text-light">
+    <div class="profile d-flex justify-content-around">
+        <div class="dp pe-5">
+            {% if user.profile.profile_photo %}
+            <img src="{{ user.profile.profile_photo.url }}" alt="" style="width: 8rem; height: 8rem; border-radius: 50%;">
+            {% else %}
+            <p style="width: 5rem; height: 5rem; border-radius: 50%; background-color: #74b2c3;"></p>
+            {% endif %}
+        </div>
+
+        <div class="card profile-info" style="background: #2d384bda !important; width: 18rem;">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <p class="fw-bold fs-4">
+                        {{user.username}}
+                    </p>
+                    <p>
+                        {% if can_update  %}
+                        <a href="{% url 'update_profile' %}">
+                            <button type="button" class="btn text-light btn-sm border ms-2 mt-2" id="edit-profile-btn">Edit Profile</button>
+                        </a>
+                        {% endif %}
+                    </p>
                 </div>
             </div>
+            <div class="card-body">
+                <span class="card-text mt-0 pt-0">
+                    <p>
+                        <span class="fw-bold fs-5">Email</span> <br>
+                        <span class="fw-light">
+                            {{user.profile.user.email}}
+                        </span>
+                    </p>
+                    <p>
+                        <span class="fw-bold fs-5">Age</span> <br>
+                        <span class="fw-light">
+                            {{user.profile.age}}
+                        </span>
+                    </p>
+                    <p>
+                        <span class="fw-bold fs-5">Ethinicity</span> <br>
+                        <span class="fw-light">
+                            {{user.profile.ethnicity}}
+                        </span>
+                    </p>
+                    <p>
+                        <span class="fw-bold fs-5">Gender</span> <br>
+                        <span class="fw-light">
+                            {{user.profile.gender}}
+                        </span>
+                    </p>
+                    <p>
+                        <span class="fw-bold fs-5">Location</span> <br>
+                        <span class="fw-light">
+                            {{user.profile.location}}
+                        </span>
+                    </p>
+                    <p>
+                        <span class="fw-bold fs-5">Location</span> <br>
+                        <span class="fw-light">
+                            {{user.profile.location}}
+                        </span>
+                    </p>
 
-        </div>
-    </div>
-    <div class="row welcome_inner">
-        <div class="col-lg-6">
-            <div class="welcome_text">
-                <h4>Preferences</h4>
-                <p>{{profile.preference}}</p>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="wel_item">
-                            <i class="lnr lnr-envelope"></i>
-                            <h4>Message Me</h4>
-                        </div>
-                        <!-- Add a loop to display all the likes and catfish votes gotten -->
-                        <div class="wel_item">
-                            <i class="lnr lnr-thumbs-up"></i>
-                            <h4>Likes</h4>
-                        </div>
-                        <div class="wel_item">
-                            <i class="lnr lnr-thumbs-Down"></i>
-                            <h4>Catfish</h4>
-                        </div>
+                    {% if user.profile.bio %}
+                    <div class="bio fw-bold">
+                        <span class="fw-bold fs-5">
+                            Bio
+                        </span> <br>
+                        <span class="fw-light">
+                            {{user.profile.bio}}
+                        </span>
                     </div>
+                    {% endif %}
 
-                </div>
+                    <p>
+                        <span class="fw-bold fs-5">Preference</span> <br>
+                        <span class="fw-light">
+                            {{user.profile.preference}}
+                        </span>
+                    </p>
+                </span>
             </div>
         </div>
+
     </div>
-{% endblock %}
+
+    <div class="my-posts mt-5 border-top text-center w-100">
+        <p class="fs-5 fw-bold text-center pt-2">
+            <i class='bx bx-grid'></i>
+            PROFILE
+        </p>
+
+        <div class="posts">
+            {% if user.posts.all %}
+            <ul class="list-group list-group-numbered" style="text-align: left;">
+                {% for post in user.posts.all %}
+                <li class="list-group-item text-light"
+                    style="background-color: transparent; border-color: #FFF !important;">{{ post.title }}</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="mt-4">YOU HAVE 0 MESSAGES</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock content %}

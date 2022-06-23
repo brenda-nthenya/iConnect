@@ -1,0 +1,56 @@
+section .row .card {
+    width: auto;
+    height: 22rem;
+    background-color: #2d384bda;
+    color: #FFF;
+}
+
+section .row .card .card-body .card-text {
+    height: 78%;
+}
+
+section .row .card .card-header.announcement {
+    background-color: rgba(255, 166, 0, 0.918) !important;
+}
+
+section .row .card .card-header.alert {
+    background-color: rgba(255, 0, 0, 0.918) !important;
+    margin-bottom: 0 !important;
+    padding: 8px 16px !important;
+}
+
+section .row .card .card-header.event {
+    background-color: var(--color-secondary) !important;
+    margin-bottom: 0 !important;
+    padding: 8px 16px !important;
+}
+
+#card-btn {
+    background-color: var(--color-secondary);
+    transition: .2s ease-in-out;
+}
+
+#card-btn:hover {
+    background-color: var(--color-primary);
+}
+
+@media screen and (max-width: 1199px) {
+    section .row .card {
+        width: auto;
+        height: 25rem;
+    }
+
+}
+
+@media screen and (max-width: 767px) {
+    section .row .card {
+        width: auto;
+        height: auto;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    section .row .card {
+        height: 24rem;
+    }
+}

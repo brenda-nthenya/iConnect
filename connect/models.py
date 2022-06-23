@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.dispatch import receiver
 
 gender_choices = (
     ("male", "male"),
@@ -31,6 +32,7 @@ class Catfish(models.Model):
 
 
 class Message(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    sender = models.ForeignKey(User, related_name='sender', on_delete=models.CASCADE)
+    receiver = models.ForeignKey(User, related_name='receiver',on_delete=models.CASCADE)
     text = models.TextField(max_length=500, null=False, blank=False)
     created_on = models.DateField(auto_now_add=True)

@@ -1,5 +1,5 @@
 <!-- ======= Header ======= -->
-  <header id="header" class="header d-flex align-items-center fixed-top">
+  <header id="header" class="header d-flex align-items-center">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
       <a href="{% url 'index' %}" class="logo d-flex align-items-center">
@@ -13,8 +13,7 @@
         <ul>
           {% if user.is_authenticated %}
           <li><a href="{% url 'home' %}" class="active">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="">Profile</a></li>
+          <li><a href="{% url 'profile' user.profile.id %}">Profile</a></li>
           <li><a href="{% url 'logout' %}">Logout</a></li>
           {% else %}
           <li><a href="{% url 'register' %}">Register</a></li>
