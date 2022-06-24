@@ -26,7 +26,7 @@
 		{% for thread in threads.all %}
 			<div class="profile"></div>
 		  	<div class="content">
-			<h5>{{ thread.user }} - {{ thread.receiver }}</h5>
+			<h5 style="color:beige;"">{{ thread.user }} - {{ thread.receiver }}</h5>
 			<a class="stretched-link" href="{% url 'thread' thread.pk %}"></a>
 			<p style="color:beige;">New Message</p>
 		  </div>
