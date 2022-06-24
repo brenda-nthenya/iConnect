@@ -29,11 +29,12 @@
                 {% if profile.profile_photo %}
                 <img src="{{ profile.profile_photo.url }}" class="card-img-top" alt="..." style="width: auto; height: 10rem;">
                 {% endif %}
-                <div class="card-body">
+                <div class="card-body"><a href="{% url 'profile' profile.id %}">
                     <h5 class="card-title">Username: {{ profile.user.username }}</h5>
                     <p class="card-text">Age: {{ profile.age }}</p>
-                    <p class="card-text">Location: {{ profile.location }}</p>
-                    <a href="{% url 'profile' profile.id %}" class="btn btn-primary">See More</a>
+                    <p class="card-text">Preference: {{ profile.preference }}</p>
+                    <p class="card-text">Bio: {{ profile.bio }}</p>
+                    </a>
                 </div>
             </div>
         </div>
