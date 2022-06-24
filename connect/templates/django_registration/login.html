@@ -1,0 +1,43 @@
+{%extends 'base.html'%}
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block styles %}
+{{block.super}}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<section class="container text-light">
+    <div class="container-fluid">
+        <div class="row d-flex justify-content-center align-item-center" style="padding-top: 10%;">
+            <div class="col-md-9 col-lg-6 col-xl-5">
+                <img src="../../../static/photos/login.png"
+                    class="img-fluid" alt="Sample image">
+            </div>
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                <form action="{% url 'login' %}" method="post">
+                    {% csrf_token %}
+
+                    {% bootstrap_form form %}
+
+                    <div>
+                        {% if form.errors %}
+                        {% bootstrap_form_errors form layout='inline' %}
+                        {% endif %}
+                    </div>
+
+                    <div class="text-center text-lg-start mt-4 pt-2">
+                        <button type="submit" class="btn btn-success mx-auto">Login</button>
+                        <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="{% url 'register' %}"
+                                class="text-warning">Sign up</a></p>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

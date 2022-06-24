@@ -1,0 +1,27 @@
+<!-- ======= Header ======= -->
+  <header id="header" class="header d-flex align-items-center">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+      <a href="{% url 'index' %}" class="logo d-flex align-items-center">
+        <h1 class="d-flex align-items-center">iConnect</h1>
+      </a>
+
+      <i class='mobile-nav-toggle mobile-nav-show bx bx-menu'></i>
+      <i class='mobile-nav-toggle mobile-nav-hide d-none bx bx-x' ></i>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'home' %}" class="active">Home</a></li>
+          <li><a href="{% url 'profile' user.profile.id %}">Profile</a></li>
+          <li><a href="{% url 'inbox' %}">Inbox</a></li>
+          <li><a href="{% url 'logout' %}">Logout</a></li>
+          {% else %}
+          <li><a href="{% url 'register' %}">Register</a></li>
+          <li><a href="{% url 'login' %}">Login</a></li>
+          {% endif %}
+        </ul>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->

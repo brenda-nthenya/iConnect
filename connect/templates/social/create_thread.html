@@ -1,0 +1,35 @@
+
+
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-3">
+			<a href="{% url 'inbox' %}" class="btn btn-light">Back to Your Inbox</a>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12 p-5">
+			<h3  style="color:antiquewhite;" >Start a Conversation!</h3>
+		</div>
+	</div>
+
+	<div class="row justify-content-center mt-3 mb-5">
+		<div class="col-md-5 col-sm-12">
+			<form method="POST">
+				{% csrf_token %}
+				<p  style="color:antiquewhite;">Who would you like to message</p>
+				{% bootstrap_form form %}
+				<div class="d-grid gap-2">
+					<button class="btn btn-success mt-3" type="submit">Connect</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
